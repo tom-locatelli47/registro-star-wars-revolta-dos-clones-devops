@@ -1,8 +1,5 @@
 name: ci-cd-backend
 
-env:
-  IMAGE_REPOSITORY: tomaslocatelli/registro-star-wars-revolta-dos-clones-devops
-
 on:
   push:
     branches: [main]
@@ -18,7 +15,7 @@ jobs:
         with:
           python-version: 3.13
           cache: "pip"
-      - run: pip install -r backend/requirements.txt
+      - run: pip install -r requirements.txt
       # - run: pytest
 
   build-and-push:
@@ -43,11 +40,11 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
-          context: ./backend
+          context: .
           push: true
           tags: |
-            ${{ env.IMAGE_REPOSITORY }}:latest
-            ${{ env.IMAGE_REPOSITORY }}:${{ steps.meta.outputs.image_tag }}
+            tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:latest
+            tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:${{ steps.meta.outputs.image_tag }}
 
   update-gitops:
     needs: build-and-push
@@ -66,11 +63,12 @@ jobs:
 
       - name: Update image tag
         run: |
-          cd gitops/registro-star-wars-revota-dos-clones-k8s/k8s
+          cd gitops/registro-star-wars-revolta-dos-clones-k8s/k8s
           kustomize edit set image \
-            ${{ env.IMAGE_REPOSITORY }}=${{ env.IMAGE_REPOSITORY }}:${{ needs.build-and-push.outputs.image_tag }}
+            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops=\
+            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops:${{ needs.build-and-push.outputs.image_tag }}
 
-      - name: Commit adn push
+      - name: Commit and push
         run: |
           cd gitops
           git config user.name "github-actions"

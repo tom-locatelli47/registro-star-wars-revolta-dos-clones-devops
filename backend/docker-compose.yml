@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:17
+    container_name: registro-atividades-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: registro_atividades
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app_user -d registro_atividades"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    container_name: registro-atividades-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://app_user:app_password@db:5432/registro_atividades
+    ports:
+      - "8001:8001"
+
+volumes:
+  postgres_data:

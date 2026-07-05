@@ -1,0 +1,15 @@
+[project]
+name = "registro-atividades-backend"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Eduardo da Silva", email = "eduardo.silva@gmail.com"},
+]
+dependencies = ["pytest>=9.0.3"]
+requires-python = "==3.14.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false

@@ -41,7 +41,8 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: |
             tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:latest
@@ -62,15 +63,13 @@ jobs:
       - name: Setup Kustomize
         uses: imranismail/setup-kustomize@v2
 
-      - name: Build and push image
-        uses: docker/build-push-action@v6
-        with:
-          context: ./backend
-          file: ./backend/Dockerfile
-          push: true
-          tags: |
-            tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:latest
-            tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:${{ steps.meta.outputs.image_tag }}
+      - name: Update image tag
+        run: |
+          cd gitops/registro-star-wars-revolta-dos-clones-k8s/k8s
+          kustomize edit set image \
+            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops=\
+            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops:${{ needs.build-and-push.outputs.image_tag }}
+
       - name: Commit and push
         run: |
           cd gitops

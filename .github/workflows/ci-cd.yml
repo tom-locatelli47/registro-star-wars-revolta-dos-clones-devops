@@ -65,10 +65,8 @@ jobs:
 
       - name: Update image tag
         run: |
-          cd gitops/registro-star-wars-revolta-dos-clones-k8s/k8s
-          kustomize edit set image \
-            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops=\
-            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops:${{ needs.build-and-push.outputs.image_tag }}
+          echo "=== Mostrando o que tem dentro de gitops ==="
+          ls -la gitops
 
       - name: Commit and push
         run: |
@@ -76,5 +74,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add .
-          git commit -m "CHORE: update backend image"
+          git commit -m "CHORE: update backend image" || echo "Sem alterações para commitar"
           git push

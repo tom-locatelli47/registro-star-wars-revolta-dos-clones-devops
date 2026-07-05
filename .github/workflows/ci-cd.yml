@@ -65,8 +65,10 @@ jobs:
 
       - name: Update image tag
         run: |
-          echo "=== Mostrando o que tem dentro de gitops ==="
-          ls -la gitops
+          cd gitops/registro-star-wars-revota-dos-clones-k8s/k8s
+          kustomize edit set image \
+            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops=\
+            tom-locatelli47/registro-star-wars-revolta-dos-clones-devops:${{ needs.build-and-push.outputs.image_tag }}
 
       - name: Commit and push
         run: |

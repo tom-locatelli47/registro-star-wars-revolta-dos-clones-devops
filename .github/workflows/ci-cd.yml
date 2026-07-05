@@ -59,16 +59,18 @@ jobs:
           token: ${{ secrets.GITOPS_TOKEN }}
           path: gitops
 
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v2
+
       - name: Build and push image
-        uses: docker/docker-push-action@v6 
+        uses: docker/build-push-action@v6
         with:
-          context: ./backend          
-          file: ./backend/Dockerfile  
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: |
             tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:latest
             tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:${{ steps.meta.outputs.image_tag }}
-
       - name: Commit and push
         run: |
           cd gitops

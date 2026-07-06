@@ -9,6 +9,7 @@ Uma aplicação de **registro de atividades (tarefas)** construída com **Python
 
 ---
 
+
 ## 🚀 Visão Geral
 
 Este repositório contém o código da aplicação e demonstra uma esteira DevOps completa, incluindo:
@@ -63,15 +64,23 @@ backend/            # API em FastAPI (Python)
   auth.py           #   autenticação
   users.py          #   rotas de usuário
   uploader.py       #   upload/serving de imagens (media)
-  Dockerfile        #   imagem da API
+  Dockerfile        #   imagem da API (tomaslocatelli/registro-star-wars-backend)
   docker-compose.yml#   API + Postgres para rodar localmente
   requirements.txt  #   dependências Python
 frontend/
   index.html        # SPA simples (HTML + CSS + JS puro) que consome a API
+  Dockerfile        # imagem estática servida via nginx (tomaslocatelli/registro-star-wars-frontend)
 .github/workflows/
-  ci-cd.yml         # pipeline de CI/CD (testes → build → push → bump no GitOps)
+  ci-cd.yml         # pipeline de CI/CD (testes → build/push de cada imagem → bump no GitOps)
 README.md           # Esta documentação
 ```
+
+Backend e frontend são empacotados como **imagens Docker independentes** e implantados como **Deployments/Services separados** no cluster (ver [`ARGO-DEVOPS-3`](https://github.com/tom-locatelli47/ARGO-DEVOPS-3)):
+
+| Componente | Imagem Docker Hub | Deployment/Service (k8s) |
+| --- | --- | --- |
+| Backend (API) | `tomaslocatelli/registro-star-wars-backend` | `registro-atividades-api` / `registro-atividades-api-service` |
+| Frontend | `tomaslocatelli/registro-star-wars-frontend` | `registro-atividades-frontend` / `registro-atividades-frontend-service` |
 
 ---
 
@@ -81,12 +90,12 @@ Este projeto vai além do código da aplicação: inclui provisionamento automat
 
 - **Provisionamento (Terraform + Ansible):** cria um cluster **K3s** (1 control plane + 3 workers) na AWS e prepara os nós para receber o Kubernetes.
 - **Manifests / GitOps:** repositório separado [`ARGO-DEVOPS-3`](https://github.com/tom-locatelli47/ARGO-DEVOPS-3) (Kustomize + ArgoCD).
-- **CI/CD:** GitHub Actions em [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml) — testa, builda e publica a imagem da API no Docker Hub e atualiza a tag da imagem no repositório GitOps; o ArgoCD sincroniza o cluster automaticamente.
+- **CI/CD:** GitHub Actions em [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml) — testa o backend, builda e publica **duas imagens independentes** (backend e frontend) no Docker Hub em jobs separados e atualiza as duas tags no repositório GitOps; o ArgoCD sincroniza o cluster automaticamente.
 
 Fluxo resumido:
 
 ```
-git push → GitHub Actions (testes → build → Docker Hub → bump da tag no GitOps) → ArgoCD → K3s
+git push → GitHub Actions (testes → build/push backend + build/push frontend → bump das duas tags no GitOps) → ArgoCD → K3s
 ```
 
 ---
@@ -133,6 +142,16 @@ A API ficará disponível em `http://localhost:8001`.
 
 Basta abrir o arquivo `frontend/index.html` no navegador (ou servi-lo com qualquer servidor estático). Ele consome a API configurada em `http://localhost:8001`.
 
+Também é possível rodar o frontend com Docker, exatamente como ele roda em produção (nginx servindo o HTML estático):
+
+```bash
+cd frontend
+docker build -t registro-frontend .
+docker run --rm -p 8080:80 registro-frontend
+```
+
+A página ficará disponível em `http://localhost:8080`.
+
 ---
 
 ## 🌐 API
@@ -150,9 +169,9 @@ A API é construída com FastAPI e expõe endpoints REST para:
 
 ## 🔁 Fluxo CD Ponta-a-Ponta
 
-1. Push na branch `main` deste repositório → GitHub Actions roda os testes.
-2. Workflow builda e publica a imagem `tomaslocatelli/registro-star-wars-revolta-dos-clones-devops:<sha>` no Docker Hub.
-3. Workflow faz commit no repositório GitOps ([`ARGO-DEVOPS-3`](https://github.com/tom-locatelli47/ARGO-DEVOPS-3)) atualizando a tag da imagem via Kustomize.
+1. Push na branch `main` deste repositório → GitHub Actions roda os testes do backend.
+2. Dois jobs independentes buildam e publicam `tomaslocatelli/registro-star-wars-backend:<sha>` e `tomaslocatelli/registro-star-wars-frontend:<sha>` no Docker Hub.
+3. Workflow faz commit no repositório GitOps ([`ARGO-DEVOPS-3`](https://github.com/tom-locatelli47/ARGO-DEVOPS-3)) atualizando as duas tags de imagem via Kustomize.
 4. ArgoCD detecta o commit e sincroniza automaticamente o cluster K3s.
 
 ---

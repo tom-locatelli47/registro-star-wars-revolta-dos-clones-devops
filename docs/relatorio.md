@@ -1,6 +1,7 @@
 # Trabalho Final - Fundamentos de DevOps
 **Aluno:** Tomas
 
+Obs: O trabalho não funcionou 100%
 ---
 
 ## 1. Introdução

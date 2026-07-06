@@ -46,6 +46,14 @@ Este projeto teve como objetivo construir uma esteira automatizada de infraestru
 ## 6. Aplicação
 * **Descrição:** Aplicação Full Stack integrada contendo uma camada de Frontend, uma API de Backend (FastAPI) e um Banco de Dados relacional (PostgreSQL).
 
+* **comandos**
+* **front**
+*  sudo kubectl port-forward svc/registro-atividades-frontend-service 3000:80 -n registro-atividades-2 --address 0.0.0.0
+*  **back**
+*  sudo kubectl port-forward svc/registro-atividades-api-service 8001:8001 -n registro-atividades-2 --address 0.0.0.0
+*  **ArgoCD**
+*   sudo kubectl port-forward svc/argocd-server -n argocd --address 0.0.0.0 8080:443
+Forwarding from 0.0.0.0:8080 -> 8080
 ---
 
 ## 7. Conclusão

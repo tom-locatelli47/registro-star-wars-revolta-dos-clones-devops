@@ -48,7 +48,7 @@ Este projeto teve como objetivo construir uma esteira automatizada de infraestru
 ---
 
 ## 7. Conclusão
-* ** Notas ** O projeto não ficou 100%, o terraform, ansible, a sincronição do ArgoCd e o backend tambem, porem não consegui acessar o frontend
+* O projeto não ficou 100%, o terraform, ansible, a sincronição do ArgoCd e o backend fuincionaram, porem não consegui acessar o frontend
 
 
 
@@ -56,4 +56,8 @@ Este projeto teve como objetivo construir uma esteira automatizada de infraestru
 
 ## 8. Links para Repositórios
 * **Infraestrutura e Código-Fonte:** [https://github.com/tom-locatelli47/registro-star-wars-revolta-dos-clones-devops](https://github.com/tom-locatelli47/registro-star-wars-revolta-dos-clones-devops)
-* **Manifestos GitOps (ArgoCD):** [https://github.com/tom-locatelli47/ARGO-DEVOPS-3](https://github.com/tom-locatelli47/ARGO-DEVOPS-3)![alt text](<Captura de tela 2026-07-06 074137.png>)![alt text](<Captura de tela 2026-07-06 085129.png>)
+* **Manifestos GitOps (ArgoCD):** [https://github.com/tom-locatelli47/ARGO-DEVOPS-3](https://github.com/tom-locatelli47/ARGO-DEVOPS-3)
+![alt text](<Captura de tela 2026-07-06 074137.png>)
+![alt text](<Captura de tela 2026-07-06 085129.png>)
+![alt text](<Captura de tela 2026-07-05 223018.png>)
+![alt text](image.png)

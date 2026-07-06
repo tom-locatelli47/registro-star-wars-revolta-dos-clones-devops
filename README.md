@@ -1,3 +1,6 @@
+
+Esse Readme foi gerado com IA
+
 # ⚔️ Registro Star Wars — Revolta dos Clones
 
 Projeto desenvolvido para a disciplina **Fundamentos de DevOps**.

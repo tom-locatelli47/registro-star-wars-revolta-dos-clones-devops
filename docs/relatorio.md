@@ -59,6 +59,7 @@ Este projeto teve como objetivo construir uma esteira automatizada de infraestru
 * **Infraestrutura e Código-Fonte:** [https://github.com/tom-locatelli47/registro-star-wars-revolta-dos-clones-devops](https://github.com/tom-locatelli47/registro-star-wars-revolta-dos-clones-devops)
 * **Manifestos GitOps (ArgoCD):** [https://github.com/tom-locatelli47/ARGO-DEVOPS-3](https://github.com/tom-locatelli47/ARGO-DEVOPS-3)
 ![alt text](<Captura de tela 2026-07-06 074137.png>)
+![alt text](image-1.png)
 ![alt text](<Captura de tela 2026-07-06 085129.png>)
 ![alt text](<Captura de tela 2026-07-05 223018.png>)
 ![alt text](image.png)

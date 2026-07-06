@@ -49,7 +49,7 @@ Este projeto teve como objetivo construir uma esteira automatizada de infraestru
 ---
 
 ## 7. Conclusão
-* O projeto não ficou 100%, o terraform, ansible, a sincronição do ArgoCd e o backend fuincionaram, porem não consegui acessar o frontend
+* O projeto não ficou 100%, o terraform, ansible, a sincronição do ArgoCd, backend e frontend
 Aconteu muitos erros enquanto teu teva sua a aplicação e o terraform muitos deles conseguui arrumar, mas teve erros que não, por isso a aplicação na esta funcionado completamente, isso é por deslize meu.
 
 Realmente tive dificultas em algumas partes o aws ficava dando kill nas minhas intsancias quando criava com t3.medium por isso tive que mudar para micro mas ela não suporava o k8s.
@@ -67,3 +67,4 @@ Realmente tive dificultas em algumas partes o aws ficava dando kill nas minhas i
 ![alt text](<Captura de tela 2026-07-06 085129.png>)
 ![alt text](<Captura de tela 2026-07-05 223018.png>)
 ![alt text](image.png)
+![alt text](image-2.png)

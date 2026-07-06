@@ -1,44 +1,173 @@
-# registro-star-wars-revolta-dos-clones-devops
+# Registro Star Wars – Revolta dos Clones
 
-Projeto de teste para a disciplina de Fundamentos de DevOps. O repositório foi reorganizado em duas partes:
+Projeto desenvolvido para a disciplina **Fundamentos de DevOps**.
 
-- `backend/`: aplicação FastAPI com autenticação, tarefas e integração com PostgreSQL.
-- `frontend/`: página estática para testar cadastro, login e CRUD de tarefas.
+## Objetivo
 
-## Portas e acesso
+Este projeto demonstra uma arquitetura completa utilizando práticas DevOps, incluindo:
 
-| Componente                          | Porta          | Como acessar                                                            |
-| ----------------------------------- | -------------- | ----------------------------------------------------------------------- |
-| Backend FastAPI                     | `8001`         | `http://localhost:8001`                                                 |
-| Documentação Swagger                | `8001`         | `http://localhost:8001/docs`                                            |
-| PostgreSQL local via Docker Compose | `5433`         | `localhost:5433`                                                        |
-| Frontend                            | sem porta fixa | abrir o arquivo [frontend/index.html](frontend/index.html) no navegador |
+- Terraform
+- Ansible
+- Kubernetes (K3s)
+- Docker
+- ArgoCD (GitOps)
+- PostgreSQL
+- Frontend
+- Backend
 
-## Como testar localmente
+Toda a infraestrutura é provisionada automaticamente e a aplicação é implantada utilizando GitOps.
 
-1. Suba o backend e o banco com Docker Compose dentro da pasta `backend`.
-2. Abra [frontend/index.html](frontend/index.html) no navegador.
-3. No campo "API base", mantenha `http://localhost:8001`.
-4. Registre um usuário, faça login e crie tarefas para validar a gravação no banco.
+---
 
-## Rotas principais da API
+# Arquitetura
 
-- `POST /api/users/register`
-- `POST /api/token`
-- `POST /api/token/refresh`
-- `GET /tasks`
-- `POST /tasks`
-- `PATCH /tasks/{task_id}`
-- `DELETE /tasks/{task_id}`
+AWS
+│
+├── Terraform
+│
+├── Ansible
+│
+└── Cluster K3s
+├── Control Plane
+├── Worker 1
+├── Worker 2
+└── Worker 3
 
-## Estrutura do repositório
+↓
 
-- `backend/`
-- `frontend/`
-- `.github/workflows/`
+ArgoCD
 
-## Observações
+↓
 
-- O frontend foi criado para testar o banco por meio da API.
-- No ambiente Kubernetes, o banco fica exposto apenas internamente pelo cluster.
-- O objetivo do projeto é demonstrar backend, frontend, banco e GitOps com ArgoCD.
+Frontend
+Backend
+PostgreSQL
+
+---
+
+# Tecnologias utilizadas
+
+- Terraform
+- Ansible
+- Kubernetes (K3s)
+- Docker
+- ArgoCD
+- PostgreSQL
+- Traefik Ingress
+
+---
+
+# Estrutura do projeto
+
+```text
+.
+├── ansible/
+├── terraform/
+├── backend/
+├── frontend/
+├── docker/
+├── kubernetes/
+└── README.md
+```
+
+---
+
+# Provisionamento
+
+A infraestrutura foi criada utilizando Terraform.
+
+Após a criação das máquinas, o Ansible realiza:
+
+- instalação do Docker
+- instalação do K3s
+- configuração do cluster
+- instalação das dependências
+
+---
+
+# Cluster Kubernetes
+
+O cluster possui:
+
+- 1 Control Plane
+- 3 Workers
+
+Todos os nós são configurados automaticamente utilizando Ansible.
+
+---
+
+# GitOps
+
+O deploy da aplicação é realizado pelo ArgoCD.
+
+Os manifests estão disponíveis em:
+
+https://github.com/tom-locatelli47/ARGO-DEVOPS-3
+
+Sempre que alterações são enviadas para este repositório, o ArgoCD sincroniza automaticamente o cluster.
+
+---
+
+# Aplicação
+
+A aplicação é composta por:
+
+- Frontend
+- Backend
+- PostgreSQL
+
+O Backend realiza a comunicação com o banco de dados.
+
+O Frontend consome a API disponibilizada pelo Backend.
+
+---
+
+# Como reproduzir
+
+## 1. Clonar o projeto
+
+git clone https://github.com/tom-locatelli47/registro-star-wars-revolta-dos-clones-devops
+
+## 2. Provisionar a infraestrutura
+
+terraform init
+
+terraform apply
+
+## 3. Executar o Ansible
+
+ansible-playbook playbook.yml
+
+## 4. Instalar o ArgoCD
+
+kubectl create namespace argocd
+
+...
+
+## 5. Criar a aplicação no ArgoCD
+
+Apontar para:
+
+https://github.com/tom-locatelli47/ARGO-DEVOPS-3
+
+Sincronizar.
+
+---
+
+# Organização dos repositórios
+
+Projeto principal
+
+https://github.com/tom-locatelli47/registro-star-wars-revolta-dos-clones-devops
+
+GitOps
+
+https://github.com/tom-locatelli47/ARGO-DEVOPS-3
+
+---
+
+# Autor
+
+Tomas Locatelli
+
+Disciplina: Fundamentos de DevOps
